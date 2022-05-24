@@ -1,0 +1,73 @@
+type Query {
+  getCharacterById(id: ID!): Character
+  getStarshipById(id: ID!): Starship
+}
+
+type Mutation {
+  saveStarship(starship: StarshipInput!, replaceNull: Boolean = false): Starship
+  saveDroidCharacter(droid: DroidInput!, replaceNull: Boolean = false): Droid
+  saveBiologicalCharacter(biological: BiologicalInput!, replaceNull: Boolean = false): Biological
+  deleteCharacterById(id: Int!): Boolean
+  deleteStarshipById(id: Int!): Boolean
+  deleteAllCharacters: Boolean
+  deleteAllStarships: Boolean
+}
+
+enum Episode {
+  A_NEW_HOPE
+  THE_EMPIRE_STRIKES_BACK
+  RETURN_OF_THE_JEDI
+}
+
+interface Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+}
+
+type Biological implements Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  starship: Starship
+  totalCredits: Int
+}
+
+type Droid implements Character {
+  id: ID!
+  name: String!
+  friends: [Character]
+  appearsIn: [Episode]!
+  primaryFunction: String
+}
+
+type Starship {
+  id: ID!
+  name: String!
+  length: Int  
+}
+
+input StarshipInput {
+  id: ID
+  name: String!
+  length: Int  
+}
+
+input BiologicalInput {
+  id: ID
+  name: String!
+  friendsIds: [Int]
+  appearsIn: [Episode]!
+  starship: StarshipInput
+  totalCredits: Int
+}
+
+input DroidInput {
+  id: ID
+  name: String!
+  friendsIds: [Int]
+  appearsIn: [Episode]!
+  primaryFunction: String
+}

@@ -1,0 +1,597 @@
+{
+	"info": {
+		"_postman_id": "053c4999-a43a-4aca-93a5-728ec4f5169e",
+		"name": "GraphQLStarWars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9569207"
+	},
+	"item": [
+		{
+			"name": "Master/Relations/Risks",
+			"item": [
+				{
+					"name": "GetCharacterById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCharacterById($id: ID = 3){\n    getCharacterById(id: $id){\n        id\n        name\n        appearsIn\n        ... on Biological {\n            totalCredits\n            starship {\n                id\n                name\n                length\n            }\n        }\n        ... on Droid {\n            primaryFunction\n        }\n        friends {\n            id\n            name\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCharacterByIdLongRequest",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\n    getCharacterById(id: 3){\n        id\n        name\n        appearsIn\n        ... on Biological {\n            totalCredits\n            starship {\n                id\n                name\n                length\n            }\n        }\n        ... on Droid {\n            primaryFunction\n        }\n        friends {\n            id\n            name\n            appearsIn\n            ... on Biological {\n                totalCredits\n                starship {\n                    id\n                    name\n                    length\n                }\n            }\n            ... on Droid {\n                primaryFunction\n            }\n            friends {\n                id\n                name\n                appearsIn\n                ... on Biological {\n                    totalCredits\n                    starship {\n                        id\n                        name\n                        length\n                    }\n                }\n                ... on Droid {\n                    primaryFunction\n                }\n                friends {\n                    id\n                    name\n                    appearsIn\n                    ... on Biological {\n                        totalCredits\n                        starship {\n                            id\n                            name\n                            length\n                        }\n                    }\n                    ... on Droid {\n                        primaryFunction\n                    }\n                    friends {\n                        id\n                        name\n                        appearsIn\n                        ... on Biological {\n                            totalCredits\n                            starship {\n                                id\n                                name\n                                length\n                            }\n                        }\n                        ... on Droid {\n                            primaryFunction\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCharacterByIdLongRequestFragments",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query VeryLongQuery($id: ID = 3){\n    getCharacterById(id: $id){\n        ...AllDataLessFriends\n        friends {\n            ...AllDataLessFriends\n            friends {\n                ...AllDataLessFriends\n                friends {\n                    ...AllDataLessFriends\n                    friends {\n                        ...AllDataLessFriends\n                    }\n                }\n            }\n        }\n    }\n}\n\nfragment AllDataLessFriends on Character {\n    id\n    name\n    appearsIn\n    ... on Biological {\n        totalCredits\n        starship {\n            id\n            name\n            length\n        }\n    }\n    ... on Droid {\n        primaryFunction\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveBiologicalCharacter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    saveBiologicalCharacter(\n        biological: { \n            name: \"Boba Fet\"\n            appearsIn: RETURN_OF_THE_JEDI\n            starship: {\n                name: \"Slave 1\"\n            }\n            totalCredits: 100000\n        },\n        replaceNull: true)\n    {\n        id\n        name\n        friends{\n            id\n            name\n        }\n        appearsIn\n        starship{\n            id\n            name\n            length\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveDroidCharacter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    saveDroidCharacter(droid: {\n        name: \"killerBot\"\n        appearsIn: RETURN_OF_THE_JEDI\n        primaryFunction: \"Destroy\"\n\n    }){\n        id\n        name\n        friends{\n            id\n            name\n            \n        }\n        appearsIn\n        primaryFunction\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStarshipById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetStarshipById($id: ID = 1){\n    getStarshipById(id: $id){\n        id\n        name\n        length\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCharacterById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deleteCharacterById(id: 1)\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAllCharacters",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deleteAllCharacters\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveStarship",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    saveStarship(starship: {\n        name: \"Stelar Destroyer 392\"\n        length: 200\n    }){\n        id\n        name\n        length\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteStarshipById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deleteStarshipById(id: 1)\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAllStarships",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deleteAllStarships\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ComplexTypes",
+			"item": [
+				{
+					"name": "GetCharacterById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCharacterById($id: ID = 3){\n    getCharacterById(id: $id){\n        id\n        name\n        appearsIn\n        ... on Biological {\n            totalCredits\n        }\n        ... on Droid {\n            primaryFunction\n        }\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveBiologicalCharacter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    saveBiologicalCharacter(\n        biological: { \n            name: \"Boba Fet\"\n            appearsIn: RETURN_OF_THE_JEDI\n            totalCredits: 100000\n        },\n        replaceNull: true)\n    {\n        id\n        name\n        appearsIn\n        totalCredits\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveDroidCharacter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    saveDroidCharacter(droid: {\n        name: \"killerBot\"\n        appearsIn: RETURN_OF_THE_JEDI\n        primaryFunction: \"Destroy\"\n\n    }){\n        id\n        name\n        appearsIn\n        primaryFunction\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveStarship",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    saveStarship(starship: {\n        name: \"Stelar Destroyer 392\"\n        length: 200\n    }){\n        id\n        name\n        length\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteCharacterById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deleteCharacterById(id: 1)\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAllCharacters",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deleteAllCharacters\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStarshipById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetStarshipById($id: ID = 1){\n    getStarshipById(id: $id){\n        id\n        name\n        length\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteStarshipById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deleteStarshipById(id: 1)\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteAllStarships",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation {\n    deleteAllStarships\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GettingStarted",
+			"item": [
+				{
+					"name": "GetCharacter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetCharacterById($id: ID = 3){\n    getCharacterById(id: $id){\n        id\n        name\n        appearsIn\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStarshipById",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query GetStarshipById($id: ID = 1){\n    getStarshipById(id: $id){\n        id\n        name\n        length\n    }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/graphql",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"graphql"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
