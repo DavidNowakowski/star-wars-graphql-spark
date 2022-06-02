@@ -1,32 +1,19 @@
 package com.dns.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.dns.dto.in.StarshipInDTO;
 import com.dns.dto.out.StarshipOutDTO;
 import com.dns.entity.StarshipEntity;
-import com.dns.repository.CharacterRepository;
 import com.dns.repository.StarshipRepository;
 
 public class StarshipService {
 
 	private final StarshipRepository starshipRepository;
 
-	private final CharacterRepository characterRepository;
-
-	public StarshipService(StarshipRepository starshipRepository, CharacterRepository characterRepository) {
+	public StarshipService(StarshipRepository starshipRepository) {
 		super();
 		this.starshipRepository = starshipRepository;
-		this.characterRepository = characterRepository;
 	}
 
-	public List<StarshipOutDTO> findAllById(List<Integer> ids) {
-		List<StarshipEntity> starshipEntities = starshipRepository.findByAllByIds(ids);
-		return toStarshipOutDTOs(starshipEntities);
-	}
-
-	// Not used here
 	public StarshipOutDTO findById(Integer id) {
 		StarshipEntity starshipEntity = starshipRepository.findById(id);
 		return toOutStarshipDTO(starshipEntity);
@@ -38,22 +25,12 @@ public class StarshipService {
 	}
 
 	public Boolean deleteById(Integer id) {
-		characterRepository.deleteStarshipRelations(id);
 		return starshipRepository.deleteById(id);
 	}
 
 	public Boolean deleteAllStarships() {
 		starshipRepository.deleteAll();
-		characterRepository.deleteAllStartshipRelations();
 		return true;
-	}
-
-	private List<StarshipOutDTO> toStarshipOutDTOs(List<StarshipEntity> starshipEntities) {
-		List<StarshipOutDTO> startshipDTOs = new ArrayList<>();
-		for (var starshipEntity : starshipEntities) {
-			startshipDTOs.add(toOutStarshipDTO(starshipEntity));
-		}
-		return startshipDTOs;
 	}
 
 	public static StarshipOutDTO toOutStarshipDTO(StarshipEntity starshipEntity) {

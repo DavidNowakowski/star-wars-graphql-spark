@@ -10,8 +10,6 @@ public class DroidInDTO {
 
 	private String name;
 
-	private List<Integer> friendsIds;
-
 	private List<EpisodeDTO> appearsIn;
 
 	private String primaryFunction;
@@ -19,11 +17,10 @@ public class DroidInDTO {
 	public DroidInDTO() {
 	}
 
-	public DroidInDTO(Integer id, String name, List<Integer> friendsIds, List<EpisodeDTO> appearsIn, String primaryFunction) {
+	public DroidInDTO(Integer id, String name, List<EpisodeDTO> appearsIn, String primaryFunction) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.friendsIds = friendsIds;
 		this.appearsIn = appearsIn;
 		this.primaryFunction = primaryFunction;
 	}
@@ -42,14 +39,6 @@ public class DroidInDTO {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Integer> getFriendsIds() {
-		return friendsIds;
-	}
-
-	public void setFriendsIds(List<Integer> friendsIds) {
-		this.friendsIds = friendsIds;
 	}
 
 	public List<EpisodeDTO> getAppearsIn() {

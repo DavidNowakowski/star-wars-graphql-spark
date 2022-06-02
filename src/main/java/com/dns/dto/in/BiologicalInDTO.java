@@ -10,25 +10,18 @@ public class BiologicalInDTO {
 
 	private String name;
 
-	private List<Integer> friendsIds;
-
 	private List<EpisodeDTO> appearsIn;
-
-	private StarshipInDTO starship;
 
 	private Integer totalCredits;
 
 	public BiologicalInDTO() {
 	}
 
-	public BiologicalInDTO(Integer id, String name, List<Integer> friendsIds, List<EpisodeDTO> appearsIn,
-			StarshipInDTO starship, Integer totalCredits) {
+	public BiologicalInDTO(Integer id, String name, List<EpisodeDTO> appearsIn, Integer totalCredits) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.friendsIds = friendsIds;
 		this.appearsIn = appearsIn;
-		this.starship = starship;
 		this.totalCredits = totalCredits;
 	}
 
@@ -48,28 +41,12 @@ public class BiologicalInDTO {
 		this.name = name;
 	}
 
-	public List<Integer> getFriendsIds() {
-		return friendsIds;
-	}
-
-	public void setFriendsIds(List<Integer> friendsIds) {
-		this.friendsIds = friendsIds;
-	}
-
 	public List<EpisodeDTO> getAppearsIn() {
 		return appearsIn;
 	}
 
 	public void setAppearsIn(List<EpisodeDTO> appearsIn) {
 		this.appearsIn = appearsIn;
-	}
-
-	public StarshipInDTO getStarship() {
-		return starship;
-	}
-
-	public void setStarship(StarshipInDTO starship) {
-		this.starship = starship;
 	}
 
 	public Integer getTotalCredits() {

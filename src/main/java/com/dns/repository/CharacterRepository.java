@@ -23,56 +23,15 @@ public class CharacterRepository {
 
 	private void mockData() {
 		storedItems = new ArrayList<>();
-		storedItems.add(new CharacterEntity(1, CharacterKind.ORGANIC, "Luke Skywalker", goodFriends(1), EpisodeEntity.getAll(), null, 100, null));
-		storedItems.add(new CharacterEntity(2, CharacterKind.ORGANIC, "Leia Skywalker", goodFriends(2), EpisodeEntity.getAll(), null, Integer.MAX_VALUE, null));
-		storedItems.add(new CharacterEntity(3, CharacterKind.ORGANIC, "Han Solo", friendsAlternative(3), EpisodeEntity.getAll(), 1, 1, null));
-		storedItems.add(new CharacterEntity(4, CharacterKind.ORGANIC, "Chewbacca", goodFriends(4), EpisodeEntity.getAll(), 1, 2, null));
-		storedItems.add(new CharacterEntity(5, CharacterKind.DROID, "R2-D2", goodFriends(5), EpisodeEntity.getAll(), null, null, "Hack & Repair"));
-		storedItems.add(new CharacterEntity(6, CharacterKind.DROID, "C-3PO", goodFriends(6), EpisodeEntity.getAll(), null, null, "Translate"));
-		storedItems.add(new CharacterEntity(7, CharacterKind.ORGANIC, "Darth Vader", evilFiends(7), EpisodeEntity.getAll(), 2, 666, null));
-		storedItems.add(new CharacterEntity(8, CharacterKind.ORGANIC, "Palpatine", evilFiends(8), EpisodeEntity.getAll(), null, Integer.MAX_VALUE, null));
+		storedItems.add(new CharacterEntity(1, CharacterKind.ORGANIC, "Luke Skywalker", EpisodeEntity.getAll(), 100, null));
+		storedItems.add(new CharacterEntity(2, CharacterKind.ORGANIC, "Leia Skywalker", EpisodeEntity.getAll(), Integer.MAX_VALUE, null));
+		storedItems.add(new CharacterEntity(3, CharacterKind.ORGANIC, "Han Solo", EpisodeEntity.getAll(), 1, null));
+		storedItems.add(new CharacterEntity(4, CharacterKind.ORGANIC, "Chewbacca", EpisodeEntity.getAll(), 2, null));
+		storedItems.add(new CharacterEntity(5, CharacterKind.DROID, "R2-D2", EpisodeEntity.getAll(), null, "Hack & Repair"));
+		storedItems.add(new CharacterEntity(6, CharacterKind.DROID, "C-3PO", EpisodeEntity.getAll(), null, "Translate"));
+		storedItems.add(new CharacterEntity(7, CharacterKind.ORGANIC, "Darth Vader", EpisodeEntity.getAll(), 666, null));
+		storedItems.add(new CharacterEntity(8, CharacterKind.ORGANIC, "Palpatine", EpisodeEntity.getAll(), Integer.MAX_VALUE, null));
 		count = storedItems.size() + 1;
-	}
-
-	private List<Integer> friendsAlternative(Integer id) {
-		Integer positionToRemove = id - 1;
-		List<Integer> goodFriends = goodFiends();
-		goodFriends.remove(positionToRemove.intValue());
-		goodFriends.remove(0);
-		goodFriends.remove(goodFriends.size() - 1);
-		return goodFriends;
-	}
-
-	private List<Integer> goodFriends(Integer id) {
-		Integer positionToRemove = id - 1;
-		List<Integer> goodFriends = goodFiends();
-		goodFriends.remove(positionToRemove.intValue());
-		return goodFriends;
-	}
-
-	private List<Integer> evilFiends(Integer id) {
-		Integer positionToRemove = id - 7;
-		List<Integer> evilFriends = evilFiends();
-		evilFriends.remove(positionToRemove.intValue());
-		return evilFriends;
-	}
-
-	private List<Integer> evilFiends() {
-		List<Integer> evilFriends = new ArrayList<>();
-		evilFriends.add(7);
-		evilFriends.add(8);
-		return evilFriends;
-	}
-
-	private List<Integer> goodFiends() {
-		List<Integer> goodFriends = new ArrayList<>();
-		goodFriends.add(1);
-		goodFriends.add(2);
-		goodFriends.add(3);
-		goodFriends.add(4);
-		goodFriends.add(5);
-		goodFriends.add(6);
-		return goodFriends;
 	}
 
 	public List<CharacterEntity> findAllByIds(List<Integer> ids) {
@@ -135,9 +94,6 @@ public class CharacterRepository {
 		original.setName(newData.getName());
 		original.setAppearsIn(newData.getAppearsIn());
 
-		original.setFriendsIds(newData.getFriendsIds());
-		original.setStarshipId(newData.getStarshipId());
-
 		original.setPrimaryFunction(newData.getPrimaryFunction());
 		original.setTotalCredits(newData.getTotalCredits());
 	}
@@ -146,9 +102,6 @@ public class CharacterRepository {
 		replaceIfNotNull(newData::getCharacterKind, original::setCharacterKind);
 		replaceIfNotNull(newData::getName, original::setName);
 		replaceIfNotNull(newData::getAppearsIn, original::setAppearsIn);
-
-		replaceIfNotNull(newData::getFriendsIds, original::setFriendsIds);
-		replaceIfNotNull(newData::getStarshipId, original::setStarshipId);
 
 		replaceIfNotNull(newData::getPrimaryFunction, original::setPrimaryFunction);
 		replaceIfNotNull(newData::getTotalCredits, original::setTotalCredits);
@@ -166,33 +119,9 @@ public class CharacterRepository {
 		return storedItems.removeIf(e -> e.getId().equals(id));
 	}
 
-	public void deleteFriendRelations(Integer id) {
-		System.out.println("[CharacterRepository]: Deleting friends relations for id: " + id);
-		storedItems.forEach((e) ->{ 
-			List<Integer> friendsIds=e.getFriendsIds();
-			if(friendsIds!=null) {
-				friendsIds.removeIf(friendId -> friendId.equals(id));
-			}});
-	}
-
 	public void deleteAll() {
 		System.out.println("[CharacterRepository]: Deleting all stored items");
 		storedItems.clear();
-	}
-
-	public void deleteStarshipRelations(Integer id) {
-		for (CharacterEntity characterEntity : storedItems) {
-			if (id.equals(characterEntity.getStarshipId())) {
-				characterEntity.setStarshipId(null);
-
-			}
-		}
-	}
-
-	public void deleteAllStartshipRelations() {
-		for (CharacterEntity characterEntity : storedItems) {
-			characterEntity.setStarshipId(null);
-		}
 	}
 
 }

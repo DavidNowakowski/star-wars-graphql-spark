@@ -10,18 +10,15 @@ public abstract class CharacterOutDTO {
 
 	protected String name;
 
-	protected List<Integer> friends;
-
 	protected List<EpisodeDTO> appearsIn;
 
 	public CharacterOutDTO() {
 	}
 
-	public CharacterOutDTO(Integer id, String name, List<Integer> friends, List<EpisodeDTO> appearsIn) {
+	public CharacterOutDTO(Integer id, String name, List<EpisodeDTO> appearsIn) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.friends = friends;
 		this.appearsIn = appearsIn;
 	}
 
@@ -39,14 +36,6 @@ public abstract class CharacterOutDTO {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Integer> getFriends() {
-		return friends;
-	}
-
-	public void setFriends(List<Integer> friends) {
-		this.friends = friends;
 	}
 
 	public List<EpisodeDTO> getAppearsIn() {

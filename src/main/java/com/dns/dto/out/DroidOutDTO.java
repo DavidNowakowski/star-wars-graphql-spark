@@ -11,9 +11,8 @@ public class DroidOutDTO extends CharacterOutDTO {
 	public DroidOutDTO() {
 	}
 
-	public DroidOutDTO(Integer id, String name, List<Integer> friends, List<EpisodeDTO> appearsIn,
-			String primaryFunction) {
-		super(id, name, friends, appearsIn);
+	public DroidOutDTO(Integer id, String name, List<EpisodeDTO> appearsIn, String primaryFunction) {
+		super(id, name, appearsIn);
 		this.primaryFunction = primaryFunction;
 	}
 

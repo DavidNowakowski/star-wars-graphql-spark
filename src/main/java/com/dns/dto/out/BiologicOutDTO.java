@@ -6,23 +6,11 @@ import com.dns.dto.EpisodeDTO;
 
 public class BiologicOutDTO extends CharacterOutDTO {
 
-	private Integer starshipID;
-
 	private Integer totalCredits;
 
-	public BiologicOutDTO(Integer id, String name, List<Integer> friends, List<EpisodeDTO> appearsIn, Integer starshipID,
-			Integer totalCredits) {
-		super(id, name, friends, appearsIn);
-		this.starshipID = starshipID;
+	public BiologicOutDTO(Integer id, String name, List<EpisodeDTO> appearsIn, Integer totalCredits) {
+		super(id, name, appearsIn);
 		this.totalCredits = totalCredits;
-	}
-
-	public Integer getStarshipID() {
-		return starshipID;
-	}
-
-	public void setStarshipID(Integer starshipID) {
-		this.starshipID = starshipID;
 	}
 
 	public Integer getTotalCredits() {
