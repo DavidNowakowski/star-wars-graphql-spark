@@ -26,7 +26,6 @@ public class StarshipService {
 		return toStarshipOutDTOs(starshipEntities);
 	}
 
-	// Not used here
 	public StarshipOutDTO findById(Integer id) {
 		StarshipEntity starshipEntity = starshipRepository.findById(id);
 		return toOutStarshipDTO(starshipEntity);

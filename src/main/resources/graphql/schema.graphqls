@@ -22,23 +22,19 @@ enum Episode {
 interface Character {
   id: ID!
   name: String!
-  friends: [Character]
   appearsIn: [Episode]!
 }
 
 type Biological implements Character {
   id: ID!
   name: String!
-  friends: [Character]
   appearsIn: [Episode]!
-  starship: Starship
   totalCredits: Int
 }
 
 type Droid implements Character {
   id: ID!
   name: String!
-  friends: [Character]
   appearsIn: [Episode]!
   primaryFunction: String
 }
@@ -58,16 +54,13 @@ input StarshipInput {
 input BiologicalInput {
   id: ID
   name: String!
-  friendsIds: [Int]
   appearsIn: [Episode]!
-  starship: StarshipInput
   totalCredits: Int
 }
 
 input DroidInput {
   id: ID
   name: String!
-  friendsIds: [Int]
   appearsIn: [Episode]!
   primaryFunction: String
 }

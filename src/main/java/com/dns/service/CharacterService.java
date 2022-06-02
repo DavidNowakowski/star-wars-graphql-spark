@@ -33,7 +33,6 @@ public class CharacterService {
 		return toCharacterOutDTOs(characterEntities);
 	}
 
-	// Not used here
 	public CharacterOutDTO findById(Integer id) {
 		CharacterEntity characterEntity = characterRepository.findById(id);
 		return toCharacterOutDTO(characterEntity);
