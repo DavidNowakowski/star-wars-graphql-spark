@@ -41,10 +41,11 @@ public class GraphQLController {
 	public Map<String, Object> post(Request req, Response res) throws Exception {
 		res.header("Content-Type", "application/json");
 		GraphQLHttpPostInput graphQLInput = objectMapper.readValue(req.body(), GraphQLHttpPostInput.class);
-
 		DataLoaderRegistry registry = createRegistry();
 
-		ExecutionInput executionInput = ExecutionInput.newExecutionInput().query(graphQLInput.getQuery())
+		ExecutionInput executionInput = ExecutionInput.newExecutionInput()
+				.query(graphQLInput.getQuery())
+				.variables(graphQLInput.getVariables())
 				.dataLoaderRegistry(registry).build();
 
 		ExecutionResult executionResult = graphQL.execute(executionInput);
